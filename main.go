@@ -15,7 +15,7 @@ func test(w http.ResponseWriter, r *http.Request) {
 	db := Conectar()
 	defer db.Close()
 
-	users, err := db.Query("select * from test")
+	users, err := db.Query("select * from test order by id desc")
 
 	if err != nil {
 		panic(err.Error())
