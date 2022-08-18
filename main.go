@@ -1,14 +1,48 @@
 package main
 
 import (
+	"encoding/json"
 	"log"
 	"net/http"
 )
 
+type User struct {
+	Id   int
+	Nome string
+}
+
 func test(w http.ResponseWriter, r *http.Request) {
+	db := Conectar()
+	defer db.Close()
+
+	users, err := db.Query("select * from test")
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	user := User{}
+	var lUsers []User
+
+	for users.Next() {
+		var id int
+		var nome string
+
+		err = users.Scan(&id, &nome)
+
+		if err != nil {
+			panic(err.Error())
+		}
+
+		user.Id = id
+		user.Nome = nome
+
+		lUsers = append(lUsers, user)
+	}
+
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
-	w.Write([]byte(`{"message":"hello intyx!", "new_field":"pera la amigáum!", "tt": "abc"}`))
+	json.NewEncoder(w).Encode(lUsers)
 }
 
 func main() {
