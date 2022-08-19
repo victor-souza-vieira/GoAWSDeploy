@@ -1,6 +1,7 @@
 package main
 
 import (
+	"API-Teste/database"
 	"encoding/json"
 	"log"
 	"net/http"
@@ -12,7 +13,7 @@ type User struct {
 }
 
 func test(w http.ResponseWriter, r *http.Request) {
-	db := Conectar()
+	db := database.Conectar()
 	defer db.Close()
 
 	users, err := db.Query("select * from test order by id desc")
