@@ -1,7 +1,7 @@
 package main
 
 import (
-	"API-Teste/database"
+	"GoAWSDeploy/database"
 	"encoding/json"
 	"log"
 	"net/http"

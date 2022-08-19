@@ -7,9 +7,8 @@ COPY go.sum ./
 
 RUN go mod download
 
-COPY *.go ./
-
-CMD [ "ls" ]
+COPY *.go .
+COPY database/*.go ./database/
 
 RUN go build -o nome-que-escolhi
 
